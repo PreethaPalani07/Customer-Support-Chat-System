@@ -14,126 +14,107 @@ const SKILL_LABELS = {
   refund: "↩️ Refund & Cancellation",
 };
 
-
+// Rule based responses
 const RULES = [
-  
   {
-    keywords: ["hi", "hello", "hey", "good morning", "good evening", "good afternoon", "howdy", "hii", "helo"],
-    response: (name) => `👋 Hi ${name}! Welcome to SupportDesk. I am your AI support assistant. How can I help you today? Please describe your issue and I will do my best to assist you! 😊`,
+    keywords: ["hi", "hello", "hey", "good morning", "good evening", "good afternoon", "howdy", "hii"],
+    response: (name) => `Hi ${name}! Welcome to SupportDesk. I am Jarvis your AI support assistant. How can I help you today?`,
     escalate: false,
   },
- 
   {
-    keywords: ["how are you", "how r u", "how are u", "what are you", "who are you"],
-    response: () => `I am your AI support assistant at SupportDesk! I am here to help you with any issues you have. What can I help you with today? 😊`,
+    keywords: ["how are you", "how r u", "what are you", "who are you"],
+    response: () => `I am Jarvis, your AI support assistant at SupportDesk! I am here to help you with any issues you have. What can I help you with today?`,
     escalate: false,
   },
- 
   {
     keywords: ["thank you", "thanks", "thank u", "thankyou", "ty", "thx"],
-    response: () => `You are welcome! 😊 I am glad I could help. Is there anything else you need help with?`,
+    response: () => `You are welcome! I am glad I could help. Is there anything else you need help with?`,
     escalate: false,
   },
- 
   {
-    keywords: ["bye", "goodbye", "see you", "take care", "cya"],
-    response: () => `Goodbye! 👋 Have a wonderful day! Feel free to come back anytime if you need help. 😊`,
+    keywords: ["bye", "goodbye", "see you", "take care"],
+    response: () => `Goodbye! Have a wonderful day! Feel free to come back anytime if you need help.`,
     escalate: false,
   },
- 
   {
-    keywords: ["ok", "okay", "got it", "alright", "sure", "fine", "understood"],
-    response: () => `Great! Is there anything else I can help you with? 😊`,
+    keywords: ["ok", "okay", "got it", "alright", "sure", "fine"],
+    response: () => `Great! Is there anything else I can help you with?`,
     escalate: false,
   },
-
   {
-    keywords: ["yes", "yeah", "yep", "yup", "solved", "fixed", "resolved", "working", "works"],
-    response: () => `✅ That is great to hear! I am glad your issue is resolved. Have a wonderful day! Feel free to come back anytime if you need more help. 😊`,
+    keywords: ["yes", "yeah", "yep", "yup", "solved", "fixed", "resolved", "working"],
+    response: () => `That is great to hear! I am glad your issue is resolved. Have a wonderful day! Feel free to come back anytime.`,
     escalate: false,
   },
-
   {
     keywords: ["password", "forgot password", "reset password", "change password"],
-    response: () => `To reset your password:\n1. Click on 'Forgot Password' on the login page\n2. Enter your registered email address\n3. Check your email for the reset link\n4. Click the link and set a new password\n\nDid this solve your issue? ✅`,
+    response: () => `To reset your password. First click on Forgot Password on the login page. Second enter your registered email address. Third check your email for the reset link. Fourth click the link and set a new password. Did this solve your issue?`,
     escalate: false,
   },
   {
-    keywords: ["login", "sign in", "cannot login", "cant login", "unable to login", "login problem", "login issue", "not able to login"],
-    response: () => `Here are some steps to fix login issues:\n1. Make sure you are using the correct email and password\n2. Check if Caps Lock is turned on\n3. Try clearing your browser cache\n4. Try resetting your password\n\nDid this solve your issue? ✅`,
+    keywords: ["login", "sign in", "cannot login", "cant login", "unable to login", "login problem"],
+    response: () => `Here are some steps to fix login issues. First make sure you are using the correct email and password. Second check if Caps Lock is turned on. Third try clearing your browser cache. Fourth try resetting your password. Did this solve your issue?`,
     escalate: false,
   },
   {
     keywords: ["account", "locked", "blocked", "suspended", "deactivated"],
-    response: () => `If your account is locked or suspended:\n1. Wait for 30 minutes and try again\n2. Make sure you have not violated any terms\n3. Check your email for any notifications\n\nDid this solve your issue? ✅`,
-    escalate: false,
-  },
-  
-  {
-    keywords: ["payment", "pay", "paying", "paid", "transaction", "billing", "charge", "charged", "deducted"],
-    response: () => `For payment related issues:\n1. Check if your bank account has sufficient balance\n2. Make sure your card details are correct\n3. Try a different payment method\n4. Check if your bank is blocking the transaction\n\nDid this solve your issue? ✅`,
+    response: () => `If your account is locked or suspended. First wait for 30 minutes and try again. Second make sure you have not violated any terms. Third check your email for any notifications. Did this solve your issue?`,
     escalate: false,
   },
   {
-    keywords: ["refund", "money back", "return money", "cashback", "reimbursement"],
-    response: () => `For refund requests:\n1. Refunds are processed within 5-7 business days\n2. Check your bank account after 7 days\n3. Make sure the refund request was submitted correctly\n\nDid this solve your issue? ✅`,
+    keywords: ["payment", "pay", "paying", "paid", "transaction", "billing", "charge", "charged"],
+    response: () => `For payment related issues. First check if your bank account has sufficient balance. Second make sure your card details are correct. Third try a different payment method. Fourth check if your bank is blocking the transaction. Did this solve your issue?`,
     escalate: false,
   },
   {
-    keywords: ["invoice", "receipt", "bill", "billing statement"],
-    response: () => `To get your invoice or receipt:\n1. Go to My Account\n2. Click on Order History\n3. Find your order and click Download Invoice\n\nDid this solve your issue? ✅`,
+    keywords: ["refund", "money back", "return money", "cashback"],
+    response: () => `For refund requests. Refunds are processed within 5 to 7 business days. Please check your bank account after 7 days. Did this solve your issue?`,
     escalate: false,
   },
-
+  {
+    keywords: ["invoice", "receipt", "bill"],
+    response: () => `To get your invoice or receipt. Go to My Account. Click on Order History. Find your order and click Download Invoice. Did this solve your issue?`,
+    escalate: false,
+  },
   {
     keywords: ["app", "crash", "crashing", "not working", "not opening", "stopped working"],
-    response: () => `To fix app issues:\n1. Clear your browser cache and cookies\n2. Try refreshing the page\n3. Try using a different browser\n4. Reinstall the app if on mobile\n\nDid this solve your issue? ✅`,
+    response: () => `To fix app issues. First clear your browser cache and cookies. Second try refreshing the page. Third try using a different browser. Fourth reinstall the app if on mobile. Did this solve your issue?`,
     escalate: false,
   },
   {
     keywords: ["slow", "loading", "not loading", "taking long", "speed", "lagging"],
-    response: () => `To fix slow loading issues:\n1. Check your internet connection\n2. Try refreshing the page\n3. Clear your browser cache\n4. Try switching to a different network\n\nDid this solve your issue? ✅`,
+    response: () => `To fix slow loading issues. First check your internet connection. Second try refreshing the page. Third clear your browser cache. Fourth try switching to a different network. Did this solve your issue?`,
     escalate: false,
   },
   {
-    keywords: ["error", "bug", "glitch", "problem", "issue", "not working properly"],
-    response: () => `To fix errors:\n1. Try refreshing the page\n2. Clear your browser cache\n3. Try using a different browser\n4. Make sure your app is updated\n\nDid this solve your issue? ✅`,
-    escalate: false,
-  },
-  
-  {
-    keywords: ["order", "track", "tracking", "delivery", "shipment", "where is my order", "parcel"],
-    response: () => `To track your order:\n1. Go to My Account\n2. Click on Orders\n3. Click Track Order\n4. You will see real time tracking information\n\nDid this solve your issue? ✅`,
+    keywords: ["order", "track", "tracking", "delivery", "shipment", "where is my order"],
+    response: () => `To track your order. Go to My Account. Click on Orders. Click Track Order. You will see real time tracking information. Did this solve your issue?`,
     escalate: false,
   },
   {
-    keywords: ["cancel", "cancellation", "cancel order", "stop order"],
-    response: () => `To cancel your order:\n1. Go to My Account\n2. Click on Orders\n3. Find your order and click Cancel\n4. Orders can only be cancelled within 24 hours of placing\n\nDid this solve your issue? ✅`,
+    keywords: ["cancel", "cancellation", "cancel order"],
+    response: () => `To cancel your order. Go to My Account. Click on Orders. Find your order and click Cancel. Orders can only be cancelled within 24 hours of placing. Did this solve your issue?`,
     escalate: false,
   },
   {
-    keywords: ["wrong item", "wrong product", "incorrect item", "different item", "not what i ordered"],
-    response: () => `If you received a wrong item:\n1. Take a clear photo of the item received\n2. Go to My Account → Orders → Report Issue\n3. Upload the photo and describe the issue\n4. Our team will process a replacement within 2-3 days\n\nDid this solve your issue? ✅`,
+    keywords: ["wrong item", "wrong product", "incorrect item", "different item"],
+    response: () => `If you received a wrong item. Take a clear photo of the item received. Go to My Account then Orders then Report Issue. Upload the photo and describe the issue. Our team will process a replacement within 2 to 3 days. Did this solve your issue?`,
     escalate: false,
   },
-
   {
-    keywords: ["no", "nope", "not solved", "not fixed", "still", "not working", "not helpful", "not useful", "doesnt work", "doesn't work", "did not work", "didnt work"],
-    response: () => `I understand your issue is not resolved yet. Let me connect you to a human agent who can help you better. Please wait a moment... 🎧`,
+    keywords: ["no", "nope", "not solved", "not fixed", "still", "not helpful", "doesnt work", "did not work"],
+    response: () => `I understand your issue is not resolved yet. Let me connect you to a human agent who can help you better. Please wait a moment.`,
     escalate: true,
   },
-
   {
-    keywords: ["human", "agent", "person", "representative", "support agent", "real person", "talk to someone", "speak to agent"],
-    response: () => `Sure! Let me connect you to a human support agent right away. Please wait a moment... 🎧`,
+    keywords: ["human", "agent", "person", "representative", "real person", "talk to someone"],
+    response: () => `Sure! Let me connect you to a human support agent right away. Please wait a moment.`,
     escalate: true,
   },
 ];
 
-
 const getRuleBasedResponse = (message, customerName) => {
   const lowerMessage = message.toLowerCase().trim();
-
   for (const rule of RULES) {
     if (rule.keywords.some((keyword) => lowerMessage.includes(keyword))) {
       return {
@@ -142,7 +123,6 @@ const getRuleBasedResponse = (message, customerName) => {
       };
     }
   }
-
   return null;
 };
 
@@ -157,14 +137,118 @@ const CustomerChat = () => {
   const [escalating, setEscalating] = useState(false);
   const [failCount, setFailCount] = useState(0);
   const [welcomeSent, setWelcomeSent] = useState(false);
+  const [isListening, setIsListening] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [voiceMode, setVoiceMode] = useState(false);
+  const [transcript, setTranscript] = useState("");
   const messagesEndRef = useRef(null);
   const fileInputRef = useRef(null);
+  const recognitionRef = useRef(null);
   const navigate = useNavigate();
   const user = auth.currentUser;
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  // Initialize Speech Recognition
+  useEffect(() => {
+    const SpeechRecognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (SpeechRecognition) {
+      const recognition = new SpeechRecognition();
+      recognition.continuous = false;
+      recognition.interimResults = true;
+      recognition.lang = "en-US";
+
+      recognition.onstart = () => {
+        setIsListening(true);
+        setTranscript("");
+      };
+
+      recognition.onresult = (event) => {
+        const current = event.resultIndex;
+        const transcriptText = event.results[current][0].transcript;
+        setTranscript(transcriptText);
+
+        if (event.results[current].isFinal) {
+          setInput(transcriptText);
+        }
+      };
+
+      recognition.onend = () => {
+        setIsListening(false);
+      };
+
+      recognition.onerror = (event) => {
+        console.error("Speech recognition error:", event.error);
+        setIsListening(false);
+      };
+
+      recognitionRef.current = recognition;
+    }
+  }, []);
+
+  // Text to Speech function
+  const speak = (text) => {
+    if (!voiceMode) return;
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "en-US";
+    utterance.rate = 0.9;
+    utterance.pitch = 1;
+    utterance.volume = 1;
+
+    // Try to use a good voice
+    const voices = window.speechSynthesis.getVoices();
+    const preferredVoice = voices.find(
+      (v) =>
+        v.name.includes("Google") ||
+        v.name.includes("Microsoft") ||
+        v.lang === "en-US"
+    );
+    if (preferredVoice) utterance.voice = preferredVoice;
+
+    utterance.onstart = () => setIsSpeaking(true);
+    utterance.onend = () => setIsSpeaking(false);
+    window.speechSynthesis.speak(utterance);
+  };
+
+  // Start listening
+  // const startListening = () => {
+  //   if (recognitionRef.current && !isListening) {
+  //     setVoiceMode(true);
+  //     recognitionRef.current.start();
+  //   }
+  // };
+  const startListening = () => {
+  if (recognitionRef.current && !isListening) {
+    setVoiceMode(true);
+    try {
+      recognitionRef.current.abort(); // ✅ Stop any existing session first
+      setTimeout(() => {
+        recognitionRef.current.start(); // ✅ Then start fresh
+      }, 100);
+    } catch (e) {
+      console.error("Recognition start error:", e);
+      setIsListening(false);
+    }
+  }
+};
+
+  // Stop listening
+  const stopListening = () => {
+    if (recognitionRef.current && isListening) {
+      recognitionRef.current.stop();
+    }
+  };
+
+  // Stop speaking
+  const stopSpeaking = () => {
+    window.speechSynthesis.cancel();
+    setIsSpeaking(false);
+  };
 
   // Listen to customer profile
   useEffect(() => {
@@ -198,7 +282,9 @@ const CustomerChat = () => {
         if (!welcomeSent) {
           setWelcomeSent(true);
           setTimeout(async () => {
-            await addBotMessage("👋 Hi! I am your AI support assistant. I can help you with login, payment, technical, order and refund issues. Please describe your issue and I will help you right away! 😊");
+            const welcomeMsg = "Hello! I am Jarvis your AI voice support assistant at SupportDesk. You can type or use the microphone button to speak your issue. How can I help you today?";
+            await addBotMessage(welcomeMsg);
+            speak(welcomeMsg);
           }, 500);
         }
       }
@@ -211,19 +297,25 @@ const CustomerChat = () => {
     await push(chatRef, {
       text,
       sender: "bot",
-      senderName: "AI Assistant",
+      senderName: "Jarvis AI",
       timestamp: Date.now(),
     });
   };
 
-  // Auto escalate to human agent with same skill
   const autoEscalateToHuman = async () => {
     if (escalating || chatMode === "human") return;
     setEscalating(true);
     try {
-      await addBotMessage("🔄 Automatically connecting you to a human support agent who specializes in your issue. Please wait...");
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      await addBotMessage(`🎧 Connecting you to a ${SKILL_LABELS[customerData?.skill]} specialist now. They will be with you shortly!`);
+      const msg1 = "Automatically connecting you to a human support agent who specializes in your issue. Please wait.";
+      await addBotMessage("🔄 " + msg1);
+      speak(msg1);
+
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+
+      const msg2 = `Connecting you to a ${SKILL_LABELS[customerData?.skill]} specialist now. They will be with you shortly!`;
+      await addBotMessage("🎧 " + msg2);
+      speak(msg2);
+
       await updateDoc(doc(db, "users", user.uid), {
         status: "waiting",
         escalatedToHuman: true,
@@ -237,24 +329,23 @@ const CustomerChat = () => {
     }
   };
 
-  const handleSend = async () => {
-    if (!input.trim()) return;
-    const userMessage = input.trim();
+  const handleSend = async (messageToSend) => {
+    const userMessage = messageToSend || input.trim();
+    if (!userMessage) return;
     setInput("");
+    setTranscript("");
 
-    // Send customer message
     const chatRef = ref(realtimeDb, `chats/${user.uid}`);
     await push(chatRef, {
       text: userMessage,
       sender: "customer",
       senderName: customerData?.name || "Customer",
       timestamp: Date.now(),
+      isVoice: voiceMode,
     });
 
-    // If human mode just send message no bot processing
     if (chatMode === "human") return;
 
-    // Process with rule based bot
     setBotTyping(true);
 
     setTimeout(async () => {
@@ -266,34 +357,44 @@ const CustomerChat = () => {
       setBotTyping(false);
 
       if (result) {
-        // Rule matched
         await addBotMessage(result.response);
+        speak(result.response);
         setFailCount(0);
 
         if (result.escalate) {
           setTimeout(async () => {
             await autoEscalateToHuman();
-          }, 1500);
+          }, 2000);
         }
       } else {
-        // No rule matched
         const newFailCount = failCount + 1;
         setFailCount(newFailCount);
 
         if (newFailCount >= 2) {
-          // Auto escalate after 2 failed attempts
-          await addBotMessage("I was unable to find a solution for your issue after multiple attempts. Let me connect you to a human agent who can help you better. 🎧");
+          const msg = "I was unable to find a solution for your issue. Let me connect you to a human agent who can help you better.";
+          await addBotMessage(msg);
+          speak(msg);
           setTimeout(async () => {
             await autoEscalateToHuman();
-          }, 1500);
+          }, 2000);
         } else {
-          await addBotMessage(`I am sorry, I could not find an exact answer for that. Could you please describe your issue in more detail? For example:\n\n• What exactly is the problem?\n• When did it start?\n• What have you tried so far?\n\nI will try my best to help you! 😊`);
+          const msg = "I am sorry I could not find an exact answer for that. Could you please describe your issue in more detail? I will try my best to help you!";
+          await addBotMessage(msg);
+          speak(msg);
         }
       }
     }, 1500);
   };
 
-  // Cloudinary file upload
+  // Auto send when voice transcript is final
+  useEffect(() => {
+    if (input && voiceMode && !isListening) {
+      setTimeout(() => {
+        handleSend(input);
+      }, 500);
+    }
+  }, [isListening]);
+
   const handleFileUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -357,18 +458,18 @@ const CustomerChat = () => {
             setBotTyping(true);
             setTimeout(async () => {
               setBotTyping(false);
-              await addBotMessage("Thank you for sharing the file! This requires a human agent to review it properly. Let me connect you to a specialist right away.");
+              const msg = "Thank you for sharing the file! This requires a human agent to review it properly. Let me connect you to a specialist right away.";
+              await addBotMessage(msg);
+              speak(msg);
               await autoEscalateToHuman();
             }, 1000);
           }
         } else {
-          console.error("Upload failed");
           setUploading(false);
         }
       });
 
       xhr.addEventListener("error", () => {
-        console.error("Upload error");
         setUploading(false);
       });
 
@@ -389,6 +490,7 @@ const CustomerChat = () => {
   };
 
   const handleLogout = async () => {
+    window.speechSynthesis.cancel();
     await signOut(auth);
     navigate("/");
   };
@@ -430,6 +532,7 @@ const CustomerChat = () => {
                 : "linear-gradient(135deg, var(--accent), var(--accent2))",
               borderRadius: "10px", display: "flex", alignItems: "center",
               justifyContent: "center", fontSize: "1.1rem",
+              animation: isSpeaking ? "pulse-glow 1s infinite" : "none",
             }}>
               {chatMode === "bot" ? "🤖" : "💬"}
             </div>
@@ -438,11 +541,11 @@ const CustomerChat = () => {
                 fontFamily: "'Syne', sans-serif",
                 fontWeight: 700, fontSize: "0.95rem"
               }}>
-                {chatMode === "bot" ? "AI Assistant" : "Support Chat"}
+                {chatMode === "bot" ? "Jarvis AI Assistant" : "Support Chat"}
               </p>
               {chatMode === "bot" ? (
-                <p style={{ fontSize: "0.7rem", color: "var(--success)" }}>
-                  ● AI Chatbot Active
+                <p style={{ fontSize: "0.7rem", color: isSpeaking ? "var(--warning)" : "var(--success)" }}>
+                  {isSpeaking ? "🔊 Jarvis is speaking..." : isListening ? "🎤 Listening..." : "● Jarvis AI Active"}
                 </p>
               ) : customerData?.assignedAgent ? (
                 <p style={{ fontSize: "0.7rem", color: "var(--success)" }}>
@@ -475,7 +578,7 @@ const CustomerChat = () => {
                 ? "rgba(52,211,153,0.3)"
                 : "rgba(56,189,248,0.3)"}`,
             }}>
-              {chatMode === "bot" ? "🤖 AI Mode" : "🎧 Human Mode"}
+              {chatMode === "bot" ? "🤖 Jarvis AI" : "🎧 Human Mode"}
             </span>
             <button onClick={handleLogout} style={{
               padding: "0.4rem 0.9rem", borderRadius: "8px",
@@ -485,6 +588,74 @@ const CustomerChat = () => {
             }}>Sign Out</button>
           </div>
         </nav>
+
+        {/* Voice Mode Banner */}
+        {isListening && (
+          <div style={{
+            background: "rgba(248,113,113,0.08)",
+            borderBottom: "1px solid rgba(248,113,113,0.2)",
+            padding: "0.75rem 1.5rem",
+            display: "flex", alignItems: "center",
+            justifyContent: "space-between", flexShrink: 0,
+          }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+              <div style={{
+                width: "10px", height: "10px", borderRadius: "50%",
+                background: "var(--danger)",
+                animation: "pulse-glow 0.8s infinite",
+              }} />
+              <p style={{ fontSize: "0.85rem", color: "var(--danger)", fontWeight: 600 }}>
+                🎤 Jarvis is listening... {transcript && `"${transcript}"`}
+              </p>
+            </div>
+            <button
+              onClick={stopListening}
+              style={{
+                padding: "0.3rem 0.8rem", borderRadius: "8px",
+                border: "1px solid rgba(248,113,113,0.4)",
+                background: "rgba(248,113,113,0.1)",
+                color: "var(--danger)", cursor: "pointer", fontSize: "0.8rem",
+              }}
+            >Stop</button>
+          </div>
+        )}
+
+        {/* Speaking Banner */}
+        {isSpeaking && (
+          <div style={{
+            background: "rgba(251,191,36,0.08)",
+            borderBottom: "1px solid rgba(251,191,36,0.2)",
+            padding: "0.75rem 1.5rem",
+            display: "flex", alignItems: "center",
+            justifyContent: "space-between", flexShrink: 0,
+          }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+              <div style={{ display: "flex", gap: "3px", alignItems: "center" }}>
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <div key={i} style={{
+                    width: "3px",
+                    height: `${8 + i * 4}px`,
+                    background: "var(--warning)",
+                    borderRadius: "2px",
+                    animation: `spin 0.${i}s ease infinite`,
+                  }} />
+                ))}
+              </div>
+              <p style={{ fontSize: "0.85rem", color: "var(--warning)", fontWeight: 600 }}>
+                🔊 Jarvis is speaking...
+              </p>
+            </div>
+            <button
+              onClick={stopSpeaking}
+              style={{
+                padding: "0.3rem 0.8rem", borderRadius: "8px",
+                border: "1px solid rgba(251,191,36,0.4)",
+                background: "rgba(251,191,36,0.1)",
+                color: "var(--warning)", cursor: "pointer", fontSize: "0.8rem",
+              }}
+            >Stop</button>
+          </div>
+        )}
 
         {/* Escalating Banner */}
         {escalating && !customerData?.assignedAgent && (
@@ -535,7 +706,7 @@ const CustomerChat = () => {
               border: "1px solid var(--border)",
             }}>
               {chatMode === "bot"
-                ? "🤖 AI Chatbot is handling your query"
+                ? "🤖 Jarvis AI Voice Assistant is handling your query"
                 : "🎧 Transferred to Human Agent"}
             </span>
           </div>
@@ -556,7 +727,17 @@ const CustomerChat = () => {
                       color: isBot ? "var(--success)" : "var(--accent2)",
                       marginBottom: "0.3rem", paddingLeft: "0.5rem"
                     }}>
-                      {isBot ? "🤖 AI Assistant" : `🎧 ${msg.senderName}`}
+                      {isBot ? "🤖 Jarvis AI" : `🎧 ${msg.senderName}`}
+                    </p>
+                  )}
+
+                  {/* Voice indicator */}
+                  {isCustomer && msg.isVoice && (
+                    <p style={{
+                      fontSize: "0.68rem", color: "var(--text-muted)",
+                      marginBottom: "0.2rem", textAlign: "right"
+                    }}>
+                      🎤 Voice message
                     </p>
                   )}
 
@@ -742,27 +923,57 @@ const CustomerChat = () => {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder={
-                chatMode === "bot"
-                  ? "Describe your issue or say hi..."
-                  : "Type your message to the agent..."
+                isListening
+                  ? "🎤 Listening... speak now"
+                  : chatMode === "bot"
+                    ? "Type or use 🎤 to speak your issue..."
+                    : "Type your message to the agent..."
               }
               rows={1}
               style={{
                 flex: 1, background: "rgba(30,41,59,0.8)",
-                border: "1px solid var(--border)", borderRadius: "14px",
+                border: `1px solid ${isListening ? "var(--danger)" : "var(--border)"}`,
+                borderRadius: "14px",
                 padding: "0.8rem 1rem", color: "var(--text)",
                 fontFamily: "'DM Sans', sans-serif", fontSize: "0.9rem",
                 outline: "none", resize: "none",
                 maxHeight: "120px", lineHeight: "1.5",
+                transition: "border-color 0.2s",
               }}
               onFocus={e => e.target.style.borderColor = chatMode === "bot"
                 ? "var(--success)" : "var(--accent)"}
-              onBlur={e => e.target.style.borderColor = "var(--border)"}
+              onBlur={e => e.target.style.borderColor = isListening
+                ? "var(--danger)" : "var(--border)"}
             />
+
+            {/* Microphone Button */}
+            {chatMode === "bot" && (
+              <button
+                onClick={isListening ? stopListening : startListening}
+                disabled={isSpeaking}
+                title={isListening ? "Stop listening" : "Click to speak"}
+                style={{
+                  width: "46px", height: "46px", borderRadius: "12px",
+                  border: "none",
+                  background: isListening
+                    ? "linear-gradient(135deg, var(--danger), #dc2626)"
+                    : isSpeaking
+                      ? "var(--border)"
+                      : "linear-gradient(135deg, #818cf8, #c084fc)",
+                  color: "white",
+                  cursor: isSpeaking ? "not-allowed" : "pointer",
+                  fontSize: "1.2rem", display: "flex", alignItems: "center",
+                  justifyContent: "center", flexShrink: 0, transition: "all 0.2s",
+                  animation: isListening ? "pulse-glow 1s infinite" : "none",
+                }}
+              >
+                {isListening ? "⏹" : "🎤"}
+              </button>
+            )}
 
             {/* Send Button */}
             <button
-              onClick={handleSend}
+              onClick={() => handleSend()}
               disabled={!input.trim() || botTyping || uploading}
               style={{
                 width: "46px", height: "46px", borderRadius: "12px",
@@ -785,7 +996,7 @@ const CustomerChat = () => {
             marginTop: "0.5rem", textAlign: "center"
           }}>
             {chatMode === "bot"
-              ? "🤖 AI Chatbot • Say no if issue not solved → auto connects to human agent 🎧 • 📎 Upload files"
+              ? "🎤 Click microphone to speak • ⌨️ Or type your issue • 📎 Upload files • Say no → connects to human 🎧"
               : "🎧 Connected to human agent • Press Enter to send • 📎 Upload files"}
           </p>
         </div>
